@@ -66,17 +66,17 @@ RUN set -ex; \
 
 # CNI network backend and Cgroups V1 are deprecated
 # CNI plugins (removed in podman 5.0 and replaced by netavark)
-FROM podmanbuildbase AS cniplugins
-ARG CNI_PLUGIN_VERSION=v1.4.0
-ARG CNI_PLUGINS="ipam/host-local main/loopback main/bridge meta/portmap meta/tuning meta/firewall"
-RUN git clone -c 'advice.detachedHead=false' --depth=1 --branch=${CNI_PLUGIN_VERSION} https://github.com/containernetworking/plugins /go/src/github.com/containernetworking/plugins
-WORKDIR /go/src/github.com/containernetworking/plugins
-RUN set -ex; \
-	for PLUGINDIR in $CNI_PLUGINS; do \
-		PLUGINBIN=/usr/local/lib/cni/$(basename $PLUGINDIR); \
-		CGO_ENABLED=0 go build -o $PLUGINBIN -ldflags "-s -w -extldflags '-static'" ./plugins/$PLUGINDIR; \
-		! ldd $PLUGINBIN; \
-	done
+#FROM podmanbuildbase AS cniplugins
+#ARG CNI_PLUGIN_VERSION=v1.4.0
+#ARG CNI_PLUGINS="ipam/host-local main/loopback main/bridge meta/portmap meta/tuning meta/firewall"
+#RUN git clone -c 'advice.detachedHead=false' --depth=1 --branch=${CNI_PLUGIN_VERSION} https://github.com/containernetworking/plugins /go/src/github.com/containernetworking/plugins
+#WORKDIR /go/src/github.com/containernetworking/plugins
+#RUN set -ex; \
+#	for PLUGINDIR in $CNI_PLUGINS; do \
+#		PLUGINBIN=/usr/local/lib/cni/$(basename $PLUGINDIR); \
+#		CGO_ENABLED=0 go build -o $PLUGINBIN -ldflags "-s -w -extldflags '-static'" ./plugins/$PLUGINDIR; \
+#		! ldd $PLUGINBIN; \
+#	done
 
 
 # netavark
@@ -161,8 +161,7 @@ RUN apk add --no-cache tzdata ca-certificates
 COPY --from=conmon /conmon/bin/conmon /usr/local/lib/podman/conmon
 #COPY --from=podman /usr/local/lib/podman/rootlessport /usr/local/lib/podman/rootlessport
 #COPY --from=podman /usr/local/bin/podman /usr/local/bin/podman
-COPY conf/containers /etc/containers
-# Rootlesskit is not necessary for rootless podman
+#COPY conf/containers /etc/containers
 RUN set -ex; \
 	adduser -D podman -h /podman -u 1000; \
 	echo 'podman:1:999' > /etc/subuid; \
