@@ -89,7 +89,7 @@ RUN git clone -c 'advice.detachedHead=false' --depth=1 --branch=${NETAVARK_VERSI
 WORKDIR /netavark
 RUN set -ex; \
 	make; \
- 	./bin/netavark -v
+ 	./bin/netavark --version
 
 
 ## slirp4netns
