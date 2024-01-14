@@ -159,8 +159,8 @@ FROM alpine:3.19 AS podmanbase
 LABEL maintainer=""
 RUN apk add --no-cache tzdata ca-certificates
 COPY --from=conmon /conmon/bin/conmon /usr/local/lib/podman/conmon
-COPY --from=podman /usr/local/lib/podman/rootlessport /usr/local/lib/podman/rootlessport
-COPY --from=podman /usr/local/bin/podman /usr/local/bin/podman
+#COPY --from=podman /usr/local/lib/podman/rootlessport /usr/local/lib/podman/rootlessport
+#COPY --from=podman /usr/local/bin/podman /usr/local/bin/podman
 COPY conf/containers /etc/containers
 # Rootlesskit is not necessary for rootless podman
 RUN set -ex; \
