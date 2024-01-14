@@ -154,26 +154,26 @@ RUN set -ex; \
 	./catatonit --version
 
 
-# Build podman base image
+## Build podman base image
 FROM alpine:3.19 AS podmanbase
 LABEL maintainer=""
 RUN apk add --no-cache tzdata ca-certificates
 COPY --from=conmon /conmon/bin/conmon /usr/local/lib/podman/conmon
-#COPY --from=podman /usr/local/lib/podman/rootlessport /usr/local/lib/podman/rootlessport
-#COPY --from=podman /usr/local/bin/podman /usr/local/bin/podman
-#COPY conf/containers /etc/containers
-RUN set -ex; \
-	adduser -D podman -h /podman -u 1000; \
-	echo 'podman:1:999' > /etc/subuid; \
-	echo 'podman:1001:64535' >> /etc/subuid; \
-	cp /etc/subuid /etc/subgid; \
-	ln -s /usr/local/bin/podman /usr/bin/docker; \
-	mkdir -p /podman/.local/share/containers/storage /var/lib/containers/storage; \
-	chown -R podman:podman /podman; \
-	mkdir -m1777 /.local /.config /.cache; \
-	podman --help >/dev/null; \
-	/usr/local/lib/podman/conmon --help >/dev/null
-ENV _CONTAINERS_USERNS_CONFIGURED=""
+##COPY --from=podman /usr/local/lib/podman/rootlessport /usr/local/lib/podman/rootlessport
+##COPY --from=podman /usr/local/bin/podman /usr/local/bin/podman
+##COPY conf/containers /etc/containers
+#RUN set -ex; \
+#	adduser -D podman -h /podman -u 1000; \
+#	echo 'podman:1:999' > /etc/subuid; \
+#	echo 'podman:1001:64535' >> /etc/subuid; \
+#	cp /etc/subuid /etc/subgid; \
+#	ln -s /usr/local/bin/podman /usr/bin/docker; \
+#	mkdir -p /podman/.local/share/containers/storage /var/lib/containers/storage; \
+#	chown -R podman:podman /podman; \
+#	mkdir -m1777 /.local /.config /.cache; \
+#	podman --help >/dev/null; \
+#	/usr/local/lib/podman/conmon --help >/dev/null
+#ENV _CONTAINERS_USERNS_CONFIGURED=""
 
 # Build rootless podman base image (without OCI runtime)
 FROM podmanbase AS rootlesspodmanbase
