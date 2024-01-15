@@ -15,19 +15,25 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
-    
-#    - name: Build signed archives
-#      run: make clean multiarch-tar TAR_TARGET=signed-tar
-#      env:
-#        GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
-#        GPG_SIGN_KEY_PASSPHRASE: ${{ secrets.GPG_SIGN_KEY_PASSPHRASE }}
+      run: docker build . --file Dockerfile --tag netavark-builder:$(date +%s)
+
+    - name: Run temporary image and copy the file
+      run: |
+        docker run --name temp-container netavark-builder:$(date +%s)
+        docker cp temp-container:/usr/local/bin/netavark ./netavark
+        docker rm temp-container
 
     - name: Upload a Build Artifact
       uses: actions/upload-artifact@v2.1.1
       with:
-        path: /usr/local/bin/netavark
+        path: ./netavark
         name: netavark
+
+#    - name: Upload a Build Artifact
+#      uses: actions/upload-artifact@v2.1.1
+#      with:
+#        path: /usr/local/bin/netavark
+#        name: netavark
 
 #    - name: Upload a Build Artifact archive amd64
 #      uses: actions/upload-artifact@v2.1.1
