@@ -29,38 +29,38 @@
          will be monitored or touched in any way.
 */
 
-{
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-
-  /*************************************************
-   ****** Global/general configuration options *****
-   *************************************************/
-
-  // Re-use predefined sets of configuration options to DRY
-  "extends": [
-    // https://github.com/containers/automation/blob/main/renovate/defaults.json5
-    "github>containers/automation//renovate/defaults.json5"
-  ],
-
-  // Permit automatic rebasing when base-branch changes by more than
-  // one commit.
-  "rebaseWhen": "behind-base-branch",
-
-  /*************************************************
-   *** Repository-specific configuration options ***
-   *************************************************/
-
-  // Don't leave dep. update. PRs "hanging", assign them to people.
-  "assignees": ["containers/netavark-maintainers"],
-
-  /**************************************************
-   ***** Manager-specific configuration options *****
-   **************************************************/
-
-  "dockerfile": {
-      // Renovate has a hard-time managing base images for
-      // Fedora and CentOS (see contrib/container_images/).  Disable
-      // all Dockerfile baes-image management.
-      "enabled": false
-  },
-}
+//{
+//  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+//
+//  /*************************************************
+//   ****** Global/general configuration options *****
+//   *************************************************/
+//
+//  // Re-use predefined sets of configuration options to DRY
+//  "extends": [
+//    // https://github.com/containers/automation/blob/main/renovate/defaults.json5
+//    "github>containers/automation//renovate/defaults.json5"
+//  ],
+//
+//  // Permit automatic rebasing when base-branch changes by more than
+//  // one commit.
+//  "rebaseWhen": "behind-base-branch",
+//
+//  /*************************************************
+//   *** Repository-specific configuration options ***
+//   *************************************************/
+//
+//  // Don't leave dep. update. PRs "hanging", assign them to people.
+//  "assignees": ["containers/netavark-maintainers"],
+//
+//  /**************************************************
+//   ***** Manager-specific configuration options *****
+//   **************************************************/
+//
+//  "dockerfile": {
+//      // Renovate has a hard-time managing base images for
+//      // Fedora and CentOS (see contrib/container_images/).  Disable
+//      // all Dockerfile baes-image management.
+//      "enabled": false
+//  },
+//}
