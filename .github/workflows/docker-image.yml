@@ -16,3 +16,39 @@ jobs:
     - uses: actions/checkout@v3
     - name: Build the Docker image
       run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+    
+#    - name: Build signed archives
+#      run: make clean multiarch-tar TAR_TARGET=signed-tar
+#      env:
+#        GPG_SIGN_KEY: ${{ secrets.GPG_SIGN_KEY }}
+#        GPG_SIGN_KEY_PASSPHRASE: ${{ secrets.GPG_SIGN_KEY_PASSPHRASE }}
+
+    - name: Upload a Build Artifact
+      uses: actions/upload-artifact@v2.1.1
+      with:
+        path: ./bin/netavark
+        name: netavark
+
+#    - name: Upload a Build Artifact archive amd64
+#      uses: actions/upload-artifact@v2.1.1
+#      with:
+#        path: ./build/asset/netavark-linux-amd64.tar.gz
+#        name: netavark-linux-amd64.tar.gz
+
+#    - name: Upload a Build Artifact signature amd64
+#      uses: actions/upload-artifact@v2.1.1
+#      with:
+#        path: ./build/asset/podman-linux-amd64.tar.gz.asc
+#        name: podman-linux-amd64.tar.gz.asc
+
+#    - name: Upload a Build Artifact archive aarch64
+#      uses: actions/upload-artifact@v2.1.1
+#      with:
+#        path: ./build/asset/netavark-linux-arm64.tar.gz
+#        name: netavark-linux-arm64.tar.gz
+
+#    - name: Upload a Build Artifact signature aarch64
+#      uses: actions/upload-artifact@v2.1.1
+#      with:
+#        path: ./build/asset/podman-linux-arm64.tar.gz.asc
+#        name: podman-linux-arm64.tar.gz.asc
